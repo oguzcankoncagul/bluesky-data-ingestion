@@ -2,3 +2,5 @@
 *.db
 logs/dbt.log
 **/.user.yml
+
+metrics/

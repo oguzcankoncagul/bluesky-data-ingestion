@@ -2,4 +2,4 @@ SELECT
     minute,
     posts
 FROM {{ ref('agg__time_minutely') }}
-ORDER BY minute DESC;
+ORDER BY minute DESC

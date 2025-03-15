@@ -48,4 +48,4 @@ ranked_words AS (
 SELECT word
 FROM ranked_words
 ORDER BY popularity_rank ASC
-LIMIT 10;
+LIMIT 10

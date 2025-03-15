@@ -36,5 +36,5 @@ models:
       +materialized: table
       +schema: dwh
     mart:
-      +materialised: view
+      +materialised: table
       +schema: mart

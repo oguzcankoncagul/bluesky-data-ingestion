@@ -44,4 +44,4 @@ final_aggregation AS (
 )
 
 -- Step 5: Only return fast likers
-SELECT * FROM final_aggregation;
+SELECT * FROM final_aggregation

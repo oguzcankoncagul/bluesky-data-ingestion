@@ -9,6 +9,6 @@ fi
 dbt run --project-dir=dbt
 dbt compile --project-dir=dbt
 
-# Step 2: Run the macro to export all analyses to CSV
+# Run the macro to export all analyses to CSV
 chmod +x run_export
 ./run_export

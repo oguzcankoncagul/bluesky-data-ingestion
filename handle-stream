@@ -23,7 +23,6 @@ con.execute("""
 for line in sys.stdin:
     try:
         event = json.loads(line.strip())
-        # Insert the entire JSON object, or break it down further
         con.execute("""
             INSERT INTO main_landing.events (timestamp, action, path, repo, record)
             VALUES (?, ?, ?, ?, ?)
@@ -32,7 +31,7 @@ for line in sys.stdin:
             event.get("action"),
             event.get("path"),
             event.get("repo"),
-            json.dumps(event.get("record", {}))  # store sub-object
+            json.dumps(event.get("record", {}))
         ])
 
     except json.JSONDecodeError:

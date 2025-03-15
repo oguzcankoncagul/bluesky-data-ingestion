@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-# Step 1: Run dbt models and analyses
-dbt run --project-dir=dbt_project
-dbt compile --project-dir=dbt_project
+# Install dependencies
+dbt deps --project-dir=dbt
+
+# Run dbt models and analyses
+dbt run --project-dir=dbt
+dbt compile --project-dir=dbt
 
 # Step 2: Run the macro to export all analyses to CSV
-dbt run-operation export_all_analyses_to_csv --project-dir=dbt_project
+dbt run-operation export_all_analyses_to_csv --project-dir=dbt

@@ -4,7 +4,7 @@ import json
 import duckdb
 
 # Open or create the local DuckDB database
-con = duckdb.connect("local_db.db")  # same path you used in profiles.yml
+con = duckdb.connect("dev.duckdb")  # same path you used in profiles.yml
 
 # Create a table if it doesn't exist yet
 # For real usage, you might want more robust schema creation, constraints, etc.

@@ -10,28 +10,5 @@ dbt run --project-dir=dbt
 dbt compile --project-dir=dbt
 
 # Step 2: Run the macro to export all analyses to CSV
-SQL_FILES=(dbt/target/compiled/dbt_project/analyses/*.sql)
-
-# If no .sql files are found, exit or show a message
-if [ ${#SQL_FILES[@]} -eq 0 ]; then
-  echo "No SQL files found in analyses/*.sql"
-  exit 1
-fi
-
-mkdir -p metrics
-
-# Loop over each .sql file in analyses/
-for sql_file in "${SQL_FILES[@]}"; do
-  base_name=$(basename "$sql_file" .sql)
-  output_file="metrics/${base_name}.csv"
-
-  # Run each query in DuckDB and export results as CSV
-  duckdb dev.duckdb <<EOF
-.mode csv
-.headers on
-.once '$output_file'
-.read '$sql_file'
-EOF
-
-  echo "Exported $sql_file -> $output_file"
-done
+chmod +x run_export
+./run_export

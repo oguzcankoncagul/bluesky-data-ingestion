@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+
+import glob
+import os
+import sys
+import subprocess
+
+def main():
+    # 1. Find all compiled analysis SQL files
+    sql_files = glob.glob("dbt/target/compiled/dbt_project/analyses/*.sql")
+    if not sql_files:
+        print("No SQL files found in dbt/target/compiled/dbt_project/analyses/*.sql")
+        sys.exit(1)
+
+    # 2. Make sure 'metrics' directory exists
+    os.makedirs("metrics", exist_ok=True)
+
+    # 3. Loop over each file and run DuckDB commands
+    for sql_file in sql_files:
+        base_name = os.path.splitext(os.path.basename(sql_file))[0]
+        output_file = f"metrics/{base_name}.csv"
+
+        # Prepare commands for DuckDB (multiline string fed via stdin)
+        duckdb_commands = f"""
+.mode csv
+.headers on
+.once '{output_file}'
+.read '{sql_file}'
+"""
+
+        # Call DuckDB in a subprocess
+        try:
+            subprocess.run(
+                ["duckdb", "dev.duckdb"],     # Adjust DB file if needed
+                input=duckdb_commands,
+                text=True,
+                check=True
+            )
+            print(f"Exported {sql_file} -> {output_file}")
+
+        except subprocess.CalledProcessError as e:
+            print(f"Error exporting {sql_file}: {e}")
+            sys.exit(1)
+
+if __name__ == "__main__":
+    main()

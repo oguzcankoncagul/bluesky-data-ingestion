@@ -29,7 +29,7 @@ word_counts AS (
         word, 
         COUNT(*) AS word_count
     FROM split_words
-    WHERE word not in ('', 'and', 'or', 'like', 'the', 'who', 'to', 'is', 'with', 'as')
+    WHERE word not in ('', 'and', 'or', 'like', 'the', 'who', 'to', 'is', 'with', 'as', 'in', 'of', 'on')
     GROUP BY word
 
 ),

@@ -115,5 +115,5 @@ did:plc:eh3fen366rkkf7mziyjm35d6,634
 ./bluesky | ./handle-stream
 
 
-watch -n 30 ./orchestrator
+watch -n 30 ./periodic
 

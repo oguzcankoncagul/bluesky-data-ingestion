@@ -33,14 +33,13 @@ fast_likers AS (
 final_aggregation AS (
     
     SELECT 
-        ult.user_key,
-        COUNT(*) AS total_likes,
-        1 AS is_fast_liker  -- We only select fast likers now
+        du.user_id,
+        COUNT(*) AS likes,
     FROM user_like_timestamps ult
-    INNER JOIN fast_likers fl
-    ON ult.user_key = fl.user_key
-    GROUP BY ult.user_key
-    ORDER BY total_likes DESC
+    LEFT JOIN {{ ref('dim__user') }} du ON du.user_key = ult.user_key
+    INNER JOIN fast_likers fl ON ult.user_key = fl.user_key -- filter to only fast likers
+    GROUP BY du.user_id
+    ORDER BY likes DESC
 
 )
 

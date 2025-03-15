@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  ##################################
+  - name: dim__user
+    columns:
+      - name: user_key
+        tests:
+          - unique
+          - not_null
+  ##################################
+  - name: fct__like
+    columns:
+      - name: like_key
+        tests:
+          - unique
+          - not_null
+      - name: user_key
+        tests:
+          - relationships:
+              to: ref('dim__user')
+              field: user_key
+  ##################################
+  - name: fct__post
+    columns:
+      - name: post_key
+        tests:
+          - unique
+          - not_null
+      - name: user_key
+        tests:
+          - relationships:
+              to: ref('dim__user')
+              field: user_key
+  ##################################
+    

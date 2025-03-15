@@ -1,0 +1,40 @@
+#!/usr/bin/env python3
+import sys
+import json
+import duckdb
+
+# Open or create the local DuckDB database
+con = duckdb.connect("local_db.db")  # same path you used in profiles.yml
+
+# Create a table if it doesn't exist yet
+# For real usage, you might want more robust schema creation, constraints, etc.
+con.execute("""
+    CREATE SCHEMA IF NOT EXISTS main_landing;
+    CREATE TABLE IF NOT EXISTS main_landing.events (
+        timestamp VARCHAR,
+        action VARCHAR,
+        path VARCHAR,
+        repo VARCHAR,
+        record TEXT
+    )
+""")
+
+
+for line in sys.stdin:
+    try:
+        event = json.loads(line.strip())
+        # Insert the entire JSON object, or break it down further
+        con.execute("""
+            INSERT INTO main_landing.events (timestamp, action, path, repo, record)
+            VALUES (?, ?, ?, ?, ?)
+        """, [
+            event.get("timestamp"),
+            event.get("action"),
+            event.get("path"),
+            event.get("repo"),
+            json.dumps(event.get("record", {}))  # store sub-object
+        ])
+
+    except json.JSONDecodeError:
+        # Malformed line or other JSON error
+        continue

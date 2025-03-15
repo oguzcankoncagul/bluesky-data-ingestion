@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: main_landing      # DBT "source" name
+    tables:
+      - name: events   # The actual table name in DuckDB
+
+models:
+  - name: stg__events
+    columns:
+      - name: timestamp
+        tests:
+          - not_null

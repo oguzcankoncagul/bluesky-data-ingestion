@@ -30,7 +30,7 @@ Some key features have been left out and are to-do for future productionisation:
     - In order to get around this, I attempted to implement a "lake db" -> "analytics db" architecture to be able to support both event streaming & CSV export threads concurrently, but quickly approached the time limit before getting this to work. 
     - In theory dbt supports attaching one DuckDB instance to another so this idea seemed the most feasible.
     - Also trialled a "lake db" -> parquet file -> "analytics db" architecture but felt like too many moving parts.
-    - This should not be a problem in commercial analytical DBs where lockss are applied on a per-table basis.
+    - This should not be a problem in commercial analytical DBs where locks are applied on a per-table basis.
   - More bespoke data quality checks can be added to `dbt/tests/` to implement tests for custom business logic
   - CI/CD can be implemented to run `dbt compile` and `dbt test` commands for unit/integration testing.
   - Auto formatting/linting can be implemented.
